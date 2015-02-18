@@ -2,7 +2,7 @@
 // This file is licensed under the MIT License
 // http://opensource.org/licenses/MIT
 
-class S7021 {
+class SI7021 {
     static READ_RH      = 0xF5;
     static READ_TEMP    = 0xF3;
     static PREV_TEMP    = 0xE0;
