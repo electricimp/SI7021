@@ -3,9 +3,9 @@
 // http://opensource.org/licenses/MIT
 
 class SI7021 {
-    static READ_RH      = 0xF5;
-    static READ_TEMP    = 0xF3;
-    static PREV_TEMP    = 0xE0;
+    static READ_RH      = "\xF5";
+    static READ_TEMP    = "\xF3";
+    static PREV_TEMP    = "\xE0";
     static RH_MULT      = 125.0/65536.0;
     static RH_ADD       = -6;
     static TEMP_MULT    = 175.72/65536.0;
