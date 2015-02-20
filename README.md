@@ -15,7 +15,7 @@ The SI7021 should be connected as follows:
 ## Constructor
 The instantiate a new SI7021 object you need to pass in a preconfigured I2C object, and an optional I2C base address. If no base address is supplied, the default address of 0x80 will be used:
 
-```
+```squirrel
 hardware.i2c12.configure(CLOCK_SPEED_100_KHZ);
 tempHumid <- SI7021(hardware.i2c12);
 ```
@@ -23,14 +23,14 @@ tempHumid <- SI7021(hardware.i2c12);
 ## SI7021.readTemp()
 The **.readTemp()** method returns the temperature in degrees celsius:
 
-```
+```squirrel
 server.log(tempHumid.readTemp() + "C");
 ```
 
 ## SI7021.readHumidity()
 The **.readHumidity()** function returns the relative humidity (0% - 100%):
 
-```
+```squirrel
 server.log(tempHumid.readHumidity() + "%");
 ```
 
