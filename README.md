@@ -1,29 +1,29 @@
-# Driver for the SI702X Temperature/Humidity Sensor
+# Driver for the Si702x Temperature/Humidity Sensor
 
 Author: [Juan Albanell](https://github.com/juanderful11/)
 
-Driver class for a [Si702X temperature/humidity sensor](http://www.silabs.com/Support%20Documents/TechnicalDocs/Si7021.pdf).
+Driver class for a [Si702x temperature/humidity sensor](http://www.silabs.com/Support%20Documents/TechnicalDocs/Si7021-A20.pdf). This class is compatible with the Si7020 and Si7021 - they differ only in measurement accuracy.
 
 ## Hardware
 
-The SI702X should be connected as follows:
+The Si702x should be connected as follows:
 
-![SI7021 Circuit](./circuit.png)
+![Si7020 Circuit](./circuit.png)
 
 ## Class Usage
 
 ### Constructor
 
-To instantiate a new SI702X object you need to pass in a preconfigured I&sup2;C object and an optional I&sup2;C base address. If no base address is supplied, the default address of `0x80` will be used.
+To instantiate a new Si702x object you need to pass in a preconfigured I&sup2;C object and an optional I&sup2;C base address. If no base address is supplied, the default address of `0x80` will be used.
 
 ```squirrel
 hardware.i2c12.configure(CLOCK_SPEED_100_KHZ)
-tempHumid <- SI7021(hardware.i2c12)
+tempHumid <- Si702x(hardware.i2c12)
 ```
 
 ### Class Methods
 
-### SI702X.readTemp()
+### Si702x.readTemp()
 
 The **readTemp()** method returns the temperature in degrees Celsius:
 
@@ -31,7 +31,7 @@ The **readTemp()** method returns the temperature in degrees Celsius:
 server.log(tempHumid.readTemp() + "C")
 ```
 
-### SI702X.readHumidity()
+### Si702x.readHumidity()
 
 The **readHumidity()** function returns the relative humidity (0% - 100%):
 
@@ -41,4 +41,4 @@ server.log(tempHumid.readHumidity() + "%")
 
 # License
 
-The SI702X library is licensed under the [MIT License](./LICENSE).
+The Si702x library is licensed under the [MIT License](./LICENSE).
