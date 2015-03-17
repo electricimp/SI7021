@@ -2,7 +2,7 @@
 // This file is licensed under the MIT License
 // http://opensource.org/licenses/MIT
 
-class SI702X {
+class Si702x {
     static READ_RH      = "\xF5";
     static READ_TEMP    = "\xF3";
     static PREV_TEMP    = "\xE0";
