@@ -2,7 +2,7 @@
 
 Author: [Juan Albanell](https://github.com/juanderful11/)
 
-Driver class for a [Si702x temperature/humidity sensor](http://www.silabs.com/Support%20Documents/TechnicalDocs/Si7021-A20.pdf). This class is compatible with the Si7020 and Si7021 - they differ only in measurement accuracy.
+Driver class for a [Si702x temperature/humidity sensor](http://www.silabs.com/Support%20Documents/TechnicalDocs/Si7021-A20.pdf). This class is compatible with the Si7020 and Si7021 &ndash; they differ only in measurement accuracy.
 
 ## Hardware
 
@@ -23,7 +23,7 @@ tempHumid <- Si702x(hardware.i2c12)
 
 ### Class Methods
 
-### Si702x.readTemp()
+### readTemp()
 
 The **readTemp()** method returns the temperature in degrees Celsius:
 
@@ -31,9 +31,9 @@ The **readTemp()** method returns the temperature in degrees Celsius:
 server.log(tempHumid.readTemp() + "C")
 ```
 
-### Si702x.readHumidity()
+### readHumidity()
 
-The **readHumidity()** function returns the relative humidity (0% - 100%):
+The **readHumidity()** function returns the relative humidity (0-100 per cent):
 
 ```squirrel
 server.log(tempHumid.readHumidity() + "%")
