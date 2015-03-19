@@ -39,6 +39,6 @@ The **readHumidity()** function returns the relative humidity (0-100 per cent):
 server.log(tempHumid.readHumidity() + "%")
 ```
 
-# License
+## License
 
 The Si702x library is licensed under the [MIT License](./LICENSE).
