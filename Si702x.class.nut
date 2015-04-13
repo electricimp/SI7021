@@ -16,7 +16,7 @@ class Si702x {
     static TIMEOUT      = 200; // ms
 
     _i2c  = null;
-    _addr  = null;
+    _addr = null;
 
     // Constructor
     // Parameters:
@@ -36,23 +36,33 @@ class Si702x {
 
     // Polls the sensor for the result of a previously-initiated measurement
     // (gives up after TIMEOUT milliseconds)
-    function _waitForResult(startTime, callback) {
+    function _pollForResult(startTime, callback) {
         local result = _i2c.read(_addr, "", 2);
         if (result) {
             callback(result);
         } else if (hardware.millis() - startTime < TIMEOUT) {
             imp.wakeup(0, function() {
-                _waitForResult(startTime, callback);
+                _pollForResult(startTime, callback);
             }.bindenv(this));
         } else {
-            throw "Si702x timed out waiting for result";
+            // Timeout
+            callback(null);
         }
     }
 
     // Starts a relative humidity measurement
-    function _readRH(callback) {
+    function _readRH(callback=null) {
         _i2c.write(_addr, MEASURE_RH);
-        _waitForResult(hardware.millis(), callback);
+        if (callback == null) {
+            local startTime = hardware.millis();
+            local result = _i2c.read(_addr, "", 2);
+            while (result == null && hardware.millis() - startTime < TIMEOUT) {
+                result = _i2c.read(_addr, "", 2);
+            }
+            return result;
+        } else {
+            _pollForResult(hardware.millis(), callback);
+        }
     }
 
     // Reads and returns the temperature value from the previous humidity measurement
@@ -60,19 +70,42 @@ class Si702x {
         local rawTemp = _i2c.read(_addr, READ_PREV_TEMP, 2);
         if (rawTemp) {
             return TEMP_MULT*((rawTemp[0] << 8) + rawTemp[1]) + TEMP_ADD;
+        } else {
+            server.log("Si702x i2c read error: " + _i2c.readerror());
+            return null;
         }
     }
 
     // Initiates a relative humidity measurement,
     // then passes the humidity and temperature readings to the user-supplied callback
-    function read(callback) {
-        // Measure and read the humidity first
-        _readRH(function(rawHumidity) {
-            local humidity = RH_MULT*((rawHumidity[0] << 8) + rawHumidity[1]) + RH_ADD;
-            // Then read the temperature reading from the humidity measurement
+    function read(callback=null) {
+        if (callback == null) {
+            local rawHumidity = _readRH();
             local temp = _readTempFromPrev();
-            // And pass it all to the user's callback
-            callback({"temperature": temp, "humidity": humidity});
-        }.bindenv(this));
+            if (rawHumidity == null || temp == null) {
+                server.log("Si702x reading timed out");
+                return null;
+            }
+            local humidity = RH_MULT*((rawHumidity[0] << 8) + rawHumidity[1]) + RH_ADD;
+            return {"temperature": temp, "humidity": humidity};
+        } else {
+            // Measure and read the humidity first
+            _readRH(function(rawHumidity) {
+                // If it failed, return an error
+                if (rawHumidity == null) {
+                    callback({"err": "reading timed out", "temperature": null, "humidity": null});
+                    return;
+                }
+                local humidity = RH_MULT*((rawHumidity[0] << 8) + rawHumidity[1]) + RH_ADD;
+                // Read the temperature reading from the humidity measurement
+                local temp = _readTempFromPrev();
+                if (temp == null) {
+                    callback({"err": "error reading temperature", "temperature": null, "humidity": null});
+                    return;
+                }
+                // And pass it all to the user's callback
+                callback({"temperature": temp, "humidity": humidity});
+            }.bindenv(this));
+        }
     }
 }
