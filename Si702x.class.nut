@@ -98,7 +98,10 @@ class Si702x {
                     callback({"err": "reading timed out", "temperature": null, "humidity": null});
                     return;
                 }
+                // Convert raw humidity value to relative humidity in percent, clamping the value to 0-100%
                 local humidity = RH_MULT*((rawHumidity[0] << 8) + rawHumidity[1]) + RH_ADD;
+                if (humidity < 0) { humidity = 0.0; }
+                else if (humidity > 100) { humidity = 100.0; }
                 // Read the temperature reading from the humidity measurement
                 local temp = _readTempFromPrev();
                 if (temp == null) {
