@@ -3,6 +3,7 @@
 // http://opensource.org/licenses/MIT
 
 class Si702x {
+    static version = [1, 0, 0];
     // Commands
     static RESET            = "\xFE";
     static MEASURE_RH       = "\xF5";
@@ -77,7 +78,8 @@ class Si702x {
     }
 
     // Initiates a relative humidity measurement,
-    // then passes the humidity and temperature readings to the user-supplied callback
+    // then passes the humidity and temperature readings as a table to the user-supplied callback, if it exists
+    // or returns them to the caller, if it doesn't
     function read(callback=null) {
         if (callback == null) {
             local rawHumidity = _readRH();
