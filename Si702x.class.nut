@@ -10,11 +10,11 @@ class Si702x {
     static MEASURE_TEMP     = "\xF3";
     static READ_PREV_TEMP   = "\xE0";
     // Additional constants
-    static RH_MULT      = 125.0/65536.0;
-    static RH_ADD       = -6;
-    static TEMP_MULT    = 175.72/65536.0;
-    static TEMP_ADD     = -46.85;
-    static TIMEOUT      = 200; // ms
+    static RH_MULT      = 125.0/65536.0;    // ------------------------------------------------
+    static RH_ADD       = -6;               // These values are used in the conversion equation
+    static TEMP_MULT    = 175.72/65536.0;   // from the Si702x datasheet
+    static TEMP_ADD     = -46.85;           // ------------------------------------------------
+    static TIMEOUT_MS   = 100;
 
     _i2c  = null;
     _addr = null;
@@ -41,7 +41,7 @@ class Si702x {
         local result = _i2c.read(_addr, "", 2);
         if (result) {
             callback(result);
-        } else if (hardware.millis() - startTime < TIMEOUT) {
+        } else if (hardware.millis() - startTime < TIMEOUT_MS) {
             imp.wakeup(0, function() {
                 _pollForResult(startTime, callback);
             }.bindenv(this));
@@ -57,7 +57,7 @@ class Si702x {
         if (callback == null) {
             local startTime = hardware.millis();
             local result = _i2c.read(_addr, "", 2);
-            while (result == null && hardware.millis() - startTime < TIMEOUT) {
+            while (result == null && hardware.millis() - startTime < TIMEOUT_MS) {
                 result = _i2c.read(_addr, "", 2);
             }
             return result;
