@@ -54,15 +54,15 @@ class Si702x {
     // Starts a relative humidity measurement
     function _readRH(callback=null) {
         _i2c.write(_addr, MEASURE_RH);
+        local startTime = hardware.millis();
         if (callback == null) {
-            local startTime = hardware.millis();
             local result = _i2c.read(_addr, "", 2);
             while (result == null && hardware.millis() - startTime < TIMEOUT_MS) {
                 result = _i2c.read(_addr, "", 2);
             }
             return result;
         } else {
-            _pollForResult(hardware.millis(), callback);
+            _pollForResult(startTime, callback);
         }
     }
 
