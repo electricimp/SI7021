@@ -38,9 +38,11 @@ If the callback is null or omitted, the method will return the above table to th
 ### Example Usage
 ```squirrel
 temphumid.read(function(result) {
-    if (result) {
-        server.log(format("Temperature: %.01f°C, Relative Humidity: %.01f%%", result.temperature, result.humidity));
+    if ("err" in result) {
+        server.log(err);
+        return;
     }
+    server.log(format("Temperature: %.01f°C, Relative Humidity: %.01f%%", result.temperature, result.humidity));
 });
 ```
 
