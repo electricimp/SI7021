@@ -85,8 +85,7 @@ class Si702x {
             local rawHumidity = _readRH();
             local temp = _readTempFromPrev();
             if (rawHumidity == null || temp == null) {
-                server.log("Si702x reading timed out");
-                return null;
+                return {"err": "error reading temperature", "temperature": null, "humidity": null};
             }
             local humidity = RH_MULT*((rawHumidity[0] << 8) + rawHumidity[1]) + RH_ADD;
             return {"temperature": temp, "humidity": humidity};
