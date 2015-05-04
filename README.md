@@ -18,6 +18,8 @@ The Si702x should be connected as follows:
 To instantiate a new Si702x object you need to pass in a preconfigured I&sup2;C object and an optional I&sup2;C base address. If no base address is supplied, the default address of `0x80` will be used.
 
 ```squirrel
+#require "Si702x.class.nut:1.0"
+
 hardware.i2c12.configure(CLOCK_SPEED_400_KHZ)
 tempHumid <- Si702x(hardware.i2c89)
 ```
@@ -26,14 +28,15 @@ tempHumid <- Si702x(hardware.i2c89)
 
 #### read([callback])
 
-The **read()** method takes an optional callback for asynchronous operation. The callback should take one parameter: a results table that contains the following:
+The **read()** method takes an optional callback for asynchronous operation. The callback should take one parameter: a results table (see below). If the callback is null or omitted, the method will return the results table to the caller instead:
 
-| Key         | Type  | Description           |
-| ----------- | ----- | --------------------- |
-| temperature | float | Temperature (°C)      |
-| humidity    | float | Relative humidity (%) |
+| Key         | Type   | Description              |
+| ----------- | ------ | ------------------------ |
+| err         | string | The error (if it exists) |
+| temperature | float  | Temperature (°C)         |
+| humidity    | float  | Relative humidity (%)    |
 
-If the callback is null or omitted, the method will return the above table to the caller instead.
+**NOTE:** The ```err``` key will *only* be present if an error occured. You should check for the existance of ```err``` before using the results
 
 ### Example Usage
 ```squirrel
