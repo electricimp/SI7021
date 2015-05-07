@@ -18,9 +18,9 @@ The Si702x should be connected as follows:
 To instantiate a new Si702x object you need to pass in a preconfigured I&sup2;C object and an optional I&sup2;C base address. If no base address is supplied, the default address of `0x80` will be used.
 
 ```squirrel
-#require "Si702x.class.nut:1.0"
+#require "Si702x.class.nut:1.0.0"
 
-hardware.i2c12.configure(CLOCK_SPEED_400_KHZ)
+hardware.i2c89.configure(CLOCK_SPEED_400_KHZ)
 tempHumid <- Si702x(hardware.i2c89)
 ```
 
@@ -36,11 +36,11 @@ The **read()** method takes an optional callback for asynchronous operation. The
 | temperature | float  | Temperature (°C)         |
 | humidity    | float  | Relative humidity (%)    |
 
-**NOTE:** The ```err``` key will *only* be present if an error occured. You should check for the existance of ```err``` before using the results
+**NOTE:** The ```err``` key will *only* be present if an error occured. You should check for the existence of ```err``` before using the results.
 
 ### Example Usage
 ```squirrel
-temphumid.read(function(result) {
+tempHumid.read(function(result) {
     if ("err" in result) {
         server.log(err);
         return;
