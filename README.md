@@ -44,7 +44,7 @@ The **read()** method takes an optional callback for asynchronous operation. The
 ```squirrel
 tempHumid.read(function(result) {
     if ("err" in result) {
-        server.log(err);
+        server.log(result.err);
         return;
     }
     server.log(format("Temperature: %.01f°C, Relative Humidity: %.01f%%", result.temperature, result.humidity));
