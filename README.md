@@ -22,8 +22,8 @@ To instantiate a new Si702x object you need to pass in a preconfigured I&sup2;C 
 ```squirrel
 #require "Si702x.class.nut:1.0.0"
 
-hardware.i2c89.configure(CLOCK_SPEED_400_KHZ)
-tempHumid <- Si702x(hardware.i2c89)
+hardware.i2c89.configure(CLOCK_SPEED_400_KHZ);
+tempHumid <- Si702x(hardware.i2c89);
 ```
 
 ### Class Methods
@@ -42,13 +42,15 @@ The **read()** method takes an optional callback for asynchronous operation. The
 
 ### Example Usage
 ```squirrel
-tempHumid.read(function(result) {
+function printResult(result) {
     if ("err" in result) {
         server.log(result.err);
         return;
     }
     server.log(format("Temperature: %.01f°C, Relative Humidity: %.01f%%", result.temperature, result.humidity));
-});
+}
+// Take a reading and print the result
+tempHumid.read(printResult);
 ```
 
 ## License
