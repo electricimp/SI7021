@@ -4,7 +4,7 @@ Author: [Gino](https://github.com/imp-gino/)
 
 Driver class for a [Si702x temperature/humidity sensor](http://www.silabs.com/Support%20Documents/TechnicalDocs/Si7021-A20.pdf). This class is compatible with the Si7020 and Si7021 &ndash; they differ only in measurement accuracy.
 
-**To add this library to your project, add** `#require "Si702x.class.nut:1.0.0"` **to the top of your device code**
+**To add this library to your project, add** `#require "Si702x.class.nut:1.0.1"` **to the top of your device code**
 
 ## Hardware ##
 
@@ -19,7 +19,7 @@ The Si702x should be connected as follows:
 To instantiate a new Si702x object you need to pass in a preconfigured I&sup2;C object and an optional I&sup2;C base address. If no base address is supplied, the default address of `0x80` will be used.
 
 ```squirrel
-#require "Si702x.class.nut:1.0.0"
+#require "Si702x.class.nut:1.0.1"
 
 hardware.i2c89.configure(CLOCK_SPEED_400_KHZ);
 tempHumid <- Si702x(hardware.i2c89);
