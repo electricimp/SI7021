@@ -32,7 +32,7 @@ class Si702x {
 
     // Resets the sensor to default settings
     function init() {
-        _i2c.write(_addr, "", RESET);
+        _i2c.write(_addr, RESET);
     }
 
     // Polls the sensor for the result of a previously-initiated measurement
