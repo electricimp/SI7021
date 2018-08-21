@@ -3,7 +3,7 @@
 // http://opensource.org/licenses/MIT
 
 class Si702x {
-    static version = [1, 0, 0];
+    static VERSION          = "1.0.1";
     // Commands
     static RESET            = "\xFE";
     static MEASURE_RH       = "\xF5";
