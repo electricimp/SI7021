@@ -1,8 +1,6 @@
 # Si702x Temperature/Humidity Sensor #
 
-Author: [Gino](https://github.com/imp-gino/)
-
-Driver class for a [Si702x temperature/humidity sensor](http://www.silabs.com/Support%20Documents/TechnicalDocs/Si7021-A20.pdf). This class is compatible with the Si7020 and Si7021 &ndash; they differ only in measurement accuracy.
+This library provides a driver class for the [Si702x temperature/humidity sensor](http://www.silabs.com/Support%20Documents/TechnicalDocs/Si7021-A20.pdf). This class is compatible with the Si7020 and Si7021 &mdash; they differ only in measurement accuracy.
 
 **To add this library to your project, add** `#require "Si702x.class.nut:1.0.1"` **to the top of your device code**
 
@@ -16,12 +14,22 @@ The Si702x should be connected as follows:
 
 ### Constructor: Si702x(*impI2Cbus[, baseAddress]*) ###
 
-To instantiate a new Si702x object you need to pass in a preconfigured I&sup2;C object and an optional I&sup2;C base address. If no base address is supplied, the default address of `0x80` will be used.
+#### Parameters ####
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| *impI2Cbus* | **i2c** object | Yes | The *configured* I&sup2;C bus to which the sensor is connected |
+| *baseAddress* | Integer  | No | The sensor’s I&sup2;C address. Default: `0x80` |
+
+#### Example ####
 
 ```squirrel
 #require "Si702x.class.nut:1.0.1"
 
+// Configure the I2C bus on the imp001
 hardware.i2c89.configure(CLOCK_SPEED_400_KHZ);
+
+// Instantiate the sensor driver
 tempHumid <- Si702x(hardware.i2c89);
 ```
 
@@ -29,25 +37,39 @@ tempHumid <- Si702x(hardware.i2c89);
 
 ### read(*[callback]*) ###
 
-This method takes an optional callback for asynchronous operation. The callback should take one parameter: a results table *(see below)*. If the callback is `null` or omitted, the method will return the results table to the caller instead:
+This method takes a sensor reading. It can operate synchronously or asynchronously.
 
-| Key         | Type   | Description              |
-| ----------- | ------ | ------------------------ |
-| *err*         | String | The error (if it exists) |
-| *temperature* | Float  | Temperature (°C)         |
-| *humidity*    | Float  | Relative humidity (%)    |
+For synchronous operation, pass `null` or provide no argument.
 
-**Note** The *err* key will *only* be present if an error occured. You should check for the existence of *err* before using the results.
+For asynchronous operation, pass in a callback function. The callback should have one parameter of its own, *results*, which will receive the table *(see Return Value, below)* that is returned by the method in synchronous mode.
+
+#### Parameters ####
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| *callback* | Function | No | An optional callback function which will receive the reading. Default: `null` |
+
+#### Return Value ####
+
+Table (the sensor reading results with the keys listed below) or nothing if the method is configured to run asynchronously.
+
+| Results Table Key | Type | Description |
+| --- | --- | --- |
+| *err* | String | An error message, or `null` if no error occurred |
+| *temperature* | Float | Temperature (Celsius) |
+| *humidity* | Float | Relative humidity (%) |
+
+**Note** The *err* key will *only* be present if an error occurred. You should check for the existence of *err* before using the results.
 
 #### Example ####
+
 ```squirrel
 function printResult(result) {
   if ("err" in result) {
     server.log(result.err);
-    return;
+  } else {
+    server.log(format("Temperature: %.01f°C, Relative Humidity: %.01f%%", result.temperature, result.humidity));
   }
-  
-  server.log(format("Temperature: %.01f°C, Relative Humidity: %.01f%%", result.temperature, result.humidity));
 }
 
 // Take a reading and print the result
@@ -56,4 +78,4 @@ tempHumid.read(printResult);
 
 ## License ##
 
-The Si702x library is licensed under the [MIT License](./LICENSE).
+This library is licensed under the [MIT License](./LICENSE).
