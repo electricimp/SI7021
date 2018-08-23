@@ -3,12 +3,15 @@
 // http://opensource.org/licenses/MIT
 
 class Si702x {
-    static VERSION          = "1.0.1";
+
+    static VERSION          = "2.0.0";
+
     // Commands
     static RESET            = "\xFE";
     static MEASURE_RH       = "\xF5";
     static MEASURE_TEMP     = "\xF3";
     static READ_PREV_TEMP   = "\xE0";
+
     // Additional constants
     static RH_MULT      = 125.0/65536.0;    // ------------------------------------------------
     static RH_ADD       = -6;               // These values are used in the conversion equation

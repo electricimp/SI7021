@@ -2,7 +2,7 @@
 
 This library provides a driver class for the [Si702x temperature/humidity sensor](http://www.silabs.com/Support%20Documents/TechnicalDocs/Si7021-A20.pdf). This class is compatible with the Si7020 and Si7021 &mdash; they differ only in measurement accuracy.
 
-**To add this library to your project, add** `#require "Si702x.class.nut:1.0.1"` **to the top of your device code**
+**To add this library to your project, add** `#require "Si702x.device.lib.nut:2.0.0"` **to the top of your device code**
 
 ## Hardware ##
 
@@ -24,7 +24,7 @@ The Si702x should be connected as follows:
 #### Example ####
 
 ```squirrel
-#require "Si702x.class.nut:1.0.1"
+#require "Si702x.device.lib.nut:2.0.0"
 
 // Configure the I2C bus on the imp001
 hardware.i2c89.configure(CLOCK_SPEED_400_KHZ);
