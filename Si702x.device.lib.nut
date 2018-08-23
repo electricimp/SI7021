@@ -3,12 +3,15 @@
 // http://opensource.org/licenses/MIT
 
 class Si702x {
-    static version = [1, 0, 0];
+
+    static VERSION          = "2.0.0";
+
     // Commands
     static RESET            = "\xFE";
     static MEASURE_RH       = "\xF5";
     static MEASURE_TEMP     = "\xF3";
     static READ_PREV_TEMP   = "\xE0";
+
     // Additional constants
     static RH_MULT      = 125.0/65536.0;    // ------------------------------------------------
     static RH_ADD       = -6;               // These values are used in the conversion equation
@@ -32,7 +35,7 @@ class Si702x {
 
     // Resets the sensor to default settings
     function init() {
-        _i2c.write(_addr, "", RESET);
+        _i2c.write(_addr, RESET);
     }
 
     // Polls the sensor for the result of a previously-initiated measurement
