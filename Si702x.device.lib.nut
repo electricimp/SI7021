@@ -33,7 +33,10 @@ enum SI702X {
     RH_ADD         = -6,
     TEMP_MULT      = 0.0026812744326889514923095703125,  // 175.72/65536.0
     TEMP_ADD       = -46.85,
-    TIMEOUT_MS     = 100
+    TIMEOUT_MS     = 100,
+    // Error Messages
+    ERROR_READ_TIMEOUT = "ERROR: Reading timed out",
+    ERROR_TEMP_READ    = "ERROR: Reading temperature failed, i2c read error: %i"
 }
 
 class Si702x {
@@ -82,7 +85,7 @@ class Si702x {
 
         if (rawHumidity == null) {
             // If rawHumidity read failed, add an error to the table
-            result.err <- "ERROR: Reading timed out";
+            result.err <- SI702X.ERROR_READ_TIMEOUT;
         } else {
             // Convert raw humidity value to relative humidity in percent, clamping the value to 0-100%
             local humidity = SI702X.RH_MULT*((rawHumidity[0] << 8) + rawHumidity[1]) + SI702X.RH_ADD;
@@ -96,7 +99,7 @@ class Si702x {
             // Get the temperature reading from the humidity measurement
             local temp = _readTempFromPrev();
             if (temp == null) {
-                result.err <- "ERROR: Reading temperature failed, i2c read error: " + _i2c.readerror();
+                result.err <- format(SI702X.ERROR_TEMP_READ, _i2c.readerror());
             } else {
                 result.temperature = temp;
             }
