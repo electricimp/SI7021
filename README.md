@@ -17,7 +17,7 @@ The Si702x should be connected as follows:
 #### Parameters ####
 
 | Parameter | Type | Required | Description |
-| --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
 | *impI2Cbus* | **i2c** object | Yes | The *configured* I&sup2;C bus to which the sensor is connected |
 | *baseAddress* | Integer  | No | The sensor’s I&sup2;C address. Default: `0x80` |
 
