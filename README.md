@@ -57,7 +57,7 @@ Table (the sensor reading results with the keys listed below) or nothing if the 
 | --- | --- | --- | --- |
 | *err* | String | No | If there, an error message |
 | *temperature* | Float | Yes | Temperature (Celsius), or `null` if an error occured |
-| *humidity* | Float | Yes | Relative humidity (%), or `null` if an error occured |
+| *humidity* | Float | Yes | Relative humidity (%), or `null` if an error occured while reading humidity |
 
 **Note** The *err* key will *only* be present if an error occurred. You should check for the existence of *err* before using the results.
 
