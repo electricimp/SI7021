@@ -17,7 +17,7 @@ The Si702x should be connected as follows:
 #### Parameters ####
 
 | Parameter | Type | Required | Description |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | *impI2Cbus* | **i2c** object | Yes | The *configured* I&sup2;C bus to which the sensor is connected |
 | *baseAddress* | Integer  | No | The sensor’s I&sup2;C address. Default: `0x80` |
 
@@ -54,7 +54,7 @@ For asynchronous operation, pass in a callback function. The callback should hav
 Table (the sensor reading results with the keys listed below) or nothing if the method is configured to run asynchronously.
 
 | Results Table Key | Type | Slot Always Present | Description |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | *err* | String | No | If there, an error message |
 | *temperature* | Float | Yes | Temperature (Celsius), or `null` if an error occured |
 | *humidity* | Float | Yes | Relative humidity (%), or `null` if an error occured |
