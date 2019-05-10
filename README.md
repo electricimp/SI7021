@@ -4,6 +4,8 @@ This library provides a driver class for the [Si702x temperature/humidity sensor
 
 **To add this library to your project, add** `#require "Si702x.device.lib.nut:2.0.1"` **to the top of your device code**
 
+![Build Status](https://cse-ci.electricimp.com/app/rest/builds/buildType:(id:Si702x_BuildAndTest)/statusIcon)
+
 ## Hardware ##
 
 The Si702x should be connected as follows:
