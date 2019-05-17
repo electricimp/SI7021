@@ -2,7 +2,9 @@
 
 This library provides a driver class for the [Si702x temperature/humidity sensor](http://www.silabs.com/Support%20Documents/TechnicalDocs/Si7021-A20.pdf). This class is compatible with the Si7020 and Si7021 &mdash; they differ only in measurement accuracy.
 
-**To add this library to your project, add** `#require "Si702x.device.lib.nut:2.0.0"` **to the top of your device code**
+**To add this library to your project, add** `#require "Si702x.device.lib.nut:2.0.1"` **to the top of your device code**
+
+![Build Status](https://cse-ci.electricimp.com/app/rest/builds/buildType:(id:Si702x_BuildAndTest)/statusIcon)
 
 ## Hardware ##
 
@@ -53,11 +55,11 @@ For asynchronous operation, pass in a callback function. The callback should hav
 
 Table (the sensor reading results with the keys listed below) or nothing if the method is configured to run asynchronously.
 
-| Results Table Key | Type | Description |
-| --- | --- | --- |
-| *err* | String | An error message, or `null` if no error occurred |
-| *temperature* | Float | Temperature (Celsius) |
-| *humidity* | Float | Relative humidity (%) |
+| Results Table Key | Type | Slot Always Present | Description |
+| --- | --- | --- | --- |
+| *err* | String | No | If there, an error message |
+| *temperature* | Float | Yes | Temperature (Celsius), or `null` if an error occured |
+| *humidity* | Float | Yes | Relative humidity (%), or `null` if an error occured while reading humidity |
 
 **Note** The *err* key will *only* be present if an error occurred. You should check for the existence of *err* before using the results.
 
